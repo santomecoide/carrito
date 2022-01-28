@@ -1,0 +1,35 @@
+<nz-layout class="layout">
+    <nz-header>
+        <div nz-row>
+            <div nz-col>
+                <ul nz-menu [nzTheme]="'dark'" [nzMode]="'horizontal'">
+                    <li nz-menu-item (click)="goShoppingCart()">
+                        <i nz-icon nzType="shopping-cart"></i>
+                        Carrito ({{(product_cart$ | async).length}})
+                    </li>
+                </ul>
+            </div>
+            <div nz-col style="margin-left: 20px" nzOffset="8">
+                <button nz-button nzType="primary" (click)="goLogin()"> 
+                    Logout
+                </button>
+            </div>
+        </div>
+    </nz-header>
+    <nz-content style="padding: 10vh 10vw;">
+        <div class="gutter-example">
+            <div nz-row [nzGutter]="[16, 16]">
+                <div nz-col class="gutter-row" *ngFor="let product of products$ | async">
+                    <div class="grid-config">
+                        <app-product 
+                            [product]="product" 
+                            [parent]="'board'" 
+                            [loading]="loading" 
+                            (add)="onAdd($event)"
+                        ></app-product>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nz-content>
+</nz-layout>

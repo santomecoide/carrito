@@ -1,0 +1,45 @@
+<nz-layout class="layout">
+    <nz-header>
+        <div nz-row>
+            <div nz-col>
+                <ul nz-menu [nzTheme]="'dark'" [nzMode]="'horizontal'" style="line-height: 64px;">
+                    <li nz-menu-item (click)="goBoard()">
+                        <i nz-icon nzType="home"></i>
+                    </li>
+                </ul>
+            </div>
+            <div nz-col style="margin-left: 20px;">
+                <button 
+                    nz-button nzType="primary" 
+                    [disabled]="(product_cart$ | async).length == 0 || loading" 
+                    (click)="newOrder()"
+                    [nzLoading]='order_loading'
+                > 
+                    Pedir
+                </button>
+            </div>
+        </div>
+    </nz-header>
+    <nz-content style="padding: 10vh 10vw;">
+        <div class="gutter-example" *ngIf="(product_cart$ | async).length > 0">
+            <div nz-row [nzGutter]="[16, 16]">
+                <div nz-col class="gutter-row" *ngFor="let product_cart of product_cart$ | async">
+                    <div class="grid-config">
+                        <app-product 
+                            [product]="getProduct(product_cart.id_product)" 
+                            [parent]="'cart'"
+                            [loading]="loading" 
+                            [product_cart]="product_cart"
+                            (remove)="onRemove($event)"
+                            (decrement)="onDecrement($event)"
+                            (increment)="onIncrement($event)"
+                        ></app-product>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="(product_cart$ | async).length == 0 && !loading">
+            No tiene productos en el carrito de compras
+        </div>
+    </nz-content>
+</nz-layout>

@@ -1,0 +1,54 @@
+<nz-layout style="height: 100vh;">
+    <nz-content style="padding: 30vh 0;"> 
+        <nz-card nzTitle="Login" style="margin: 0 5vw;">
+            <form [formGroup]="login_form">           
+                
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="error">
+                        <input 
+                            type="email" 
+                            nz-input 
+                            placeholder="Correo" 
+                            formControlName="email"
+                        />
+                    </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="error">
+                        <nz-input-group [nzSuffix]="suffixTemplate">
+                            <input
+                                [type]="password_visible ? 'text' : 'password'"
+                                nz-input
+                                placeholder="Contrasena"
+                                formControlName="password"
+                            />
+                        </nz-input-group>
+                        <ng-template #suffixTemplate>
+                            <i nz-icon [nzType]="password_visible ? 'eye-invisible' : 'eye'" 
+                                (click)="password_visible = !password_visible"
+                            ></i>
+                        </ng-template>
+                    </nz-form-control>
+                </nz-form-item>
+                
+                <nz-form-item nz-row class="register-area" style="float: right;" >
+                    <nz-form-control>
+                        <button nz-button nzType="primary" [disabled]="login_form.invalid" 
+                            (click)="login()" [nzLoading]='loading'>
+                            Login
+                        </button>
+                    </nz-form-control>
+                </nz-form-item> 
+                
+                <nz-form-item>
+                    <span>
+                        <a [routerLink]="['/signin']">Realizar registro</a>
+                    </span>
+                </nz-form-item> 
+
+            </form>
+        </nz-card>
+    </nz-content>
+</nz-layout>
+
